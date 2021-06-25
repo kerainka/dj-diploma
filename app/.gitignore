@@ -2,6 +2,17 @@
 # Created by https://www.toptal.com/developers/gitignore/api/python,pycharm,visualstudiocode,django
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,pycharm,visualstudiocode,django
 
+.installed.cfg
+bin
+develop-eggs
+dist
+downloads
+eggs
+parts
+src/*.egg-info
+lib
+lib64
+
 ### Django ###
 *.log
 *.pot
