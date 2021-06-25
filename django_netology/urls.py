@@ -13,28 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from app import views
 
+from django_netology.app.views import ProductViewSet, ReviewViewSet, OrderViewSet, CollectionViewSet
 
-router1 = DefaultRouter()
-router1.register("api/v1/products", views.ProductViewSet, basename="products")
+router = DefaultRouter()
 
-router2 = DefaultRouter()
-router2.register("api/v1/product-reviews", views.ReviewViewSet, basename="product-reviews")
+router.register('products', ProductViewSet, basename='products')
+router.register('reviews', ReviewViewSet, basename='reviews')
+router.register('orders', OrderViewSet, basename='orders')
+router.register('collections', CollectionViewSet, basename='collections')
 
-router3 = DefaultRouter()
-router3.register("api/v1/orders", views.OrderViewSet, basename="orders")
-
-router4 = DefaultRouter()
-router4.register("api/v1/product-collections", views.CollectionViewSet, basename="product-collections")
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include(router1.urls), name='products'),
-    path('', include(router2.urls), name='reviews'),
-    path('', include(router3.urls), name='orders'),
-    path('', include(router4.urls), name='collections'),
-]
+urlpatterns = router.urls

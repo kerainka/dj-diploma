@@ -16,7 +16,7 @@ class TimestampFields(models.Model):
 class Product(TimestampFields):
     name = models.CharField(max_length=50, verbose_name="Название")
     desc = models.TextField(max_length=200, verbose_name="Описание")
-    price = models.DecimalField(max_digits=15, verbose_name="Цена")
+    price = models.DecimalField(max_digits=15, verbose_name="Цена", decimal_places=2)
 
     class Meta:
         verbose_name_plural = 'products'
@@ -29,14 +29,14 @@ class Product(TimestampFields):
 class Review(TimestampFields):
     review = models.ForeignKey(
         Product, on_delete=models.CASCADE,
-        null=True, related_name='reviews',
+        related_name='reviews',
         verbose_name="Товар")
 
     creator = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         verbose_name="Пользователь",
-        related_name='users'
+        related_name='reviews'
     )
 
     text = models.TextField(max_length=100, verbose_name="Отзыв")
@@ -56,7 +56,7 @@ class Review(TimestampFields):
 
 class ProductPosition(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Товары")
-    order = models.ForeignKey("Orders", related_name='positions', on_delete=models.CASCADE, verbose_name="Заказ")
+    order = models.ForeignKey("Order", related_name='positions', on_delete=models.CASCADE, verbose_name="Заказ")
     quantity = models.PositiveIntegerField(default=1, verbose_name="Количество")
 
     def get_cost(self):
@@ -68,13 +68,13 @@ class Order(TimestampFields):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         verbose_name="Пользователь",
-        related_name='users'
+        related_name='orders'
     )
 
     STATUS = (
-        'NEW',
-        'IN_PROGRESS',
-        'DONE'
+        ('new','Новый'),
+        ('in_progress', 'В обработке'),
+        ('done', 'Завершен')
     )
 
     status = models.CharField(choices=STATUS, default=1, verbose_name="Статус")
@@ -93,7 +93,7 @@ class Order(TimestampFields):
 
 class Collection(TimestampFields):
     title = models.CharField(max_length=50,  verbose_name="Заголовок")
-    text = models.TextField(max_length=100, verbose_name="Описание")
+    text = models.TextField(verbose_name="Описание")
     products = models.ManyToManyField(Product, verbose_name="Товары")
 
     class Meta:
