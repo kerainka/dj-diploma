@@ -2,22 +2,13 @@
 # Created by https://www.toptal.com/developers/gitignore/api/python,pycharm,visualstudiocode,django
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,pycharm,visualstudiocode,django
 
-.installed.cfg
-bin
-develop-eggs
-dist
-downloads
-eggs
-parts
-src/*.egg-info
-lib
-lib64
 
 ### Django ###
 *.log
 *.pot
 *.pyc
-__pycache__/
+app/__pycache__/
+django_netology/__pycache__/
 local_settings.py
 django_netology/db.sqlite3
 db.sqlite3-journal
