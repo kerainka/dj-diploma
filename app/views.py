@@ -1,7 +1,7 @@
 from rest_framework.decorators import permission_classes
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
-from .models import Product, Order, Review, Collection
+from .models import Product, Order, ProductReview, Collection
 from .permissions import AllowOnly
 from .serializers import ProductSerializer, OrderSerializer, ReviewSerializer, CollectionSerializer
 from .filters import ProductFilter, OrderFilter, ReviewFilter
@@ -46,7 +46,7 @@ class OrderViewSet(ModelViewSet):
 
 
 class ReviewViewSet(ModelViewSet):
-    queryset = Review.objects.select_related('review').all()
+    queryset = ProductReview.objects.select_related('review_product').all()
     serializer_class = ReviewSerializer
     filterset_class = ReviewFilter
 

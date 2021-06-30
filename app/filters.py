@@ -1,16 +1,11 @@
+from django.contrib.auth import get_user_model
 from django_filters import rest_framework as filters
-from .models import Product, Order, Review
+from .models import Product, Order, ProductReview
 
 
 class ProductFilter(filters.FilterSet):
-    id = filters.ModelMultipleChoiceFilter(
-        field_name="id",
-        to_field_name="id",
-        queryset=Product.objects.all()
-    )
-
-    name = filters.CharFilter(lookup_expr='iexact')
-    desc = filters.CharFilter(lookup_expr='iexact')
+    name = filters.CharFilter(lookup_expr='icontains')
+    desc = filters.CharFilter(lookup_expr='icontains')
     price_from = filters.NumberFilter(field_name='price', lookup_expr='gt')
     price_to = filters.NumberFilter(field_name='price', lookup_expr='lt')
 
@@ -20,12 +15,6 @@ class ProductFilter(filters.FilterSet):
 
 
 class OrderFilter(filters.FilterSet):
-    id = filters.ModelMultipleChoiceFilter(
-        field_name="id",
-        to_field_name="id",
-        queryset=Order.objects.all()
-    )
-
     created_at = filters.DateFromToRangeFilter()
     updated_at = filters.DateFromToRangeFilter()
     status = filters.ChoiceFilter(choices=Order.STATUS)
@@ -42,27 +31,15 @@ class OrderFilter(filters.FilterSet):
 
 
 class ReviewFilter(filters.FilterSet):
-    id = filters.ModelMultipleChoiceFilter(
-        field_name="id",
-        to_field_name="id",
-        queryset=Review.objects.all()
-    )
-
     created_at = filters.DateFromToRangeFilter()
-
-    reviews = filters.ModelMultipleChoiceFilter(
-        field_name="id",
-        to_field_name="id",
-        queryset=Review.objects.all()
-    )
 
     creator = filters.ModelMultipleChoiceFilter(
         field_name="user",
         to_field_name="user",
-        queryset=Order.creator.objects.all()
+        queryset=get_user_model().objects.all()
     )
 
     class Meta:
-        model = Review
-        fields = ('id', 'reviews', 'created_at')
+        model = ProductReview
+        fields = ('id', 'review_product', 'created_at')
 

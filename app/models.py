@@ -26,17 +26,17 @@ class Product(TimestampFields):
         return self.name
 
 
-class Review(TimestampFields):
-    review = models.ForeignKey(
+class ProductReview(TimestampFields):
+    review_product = models.ForeignKey(
         Product, on_delete=models.CASCADE,
-        related_name='reviews',
+        related_name='products',
         verbose_name="Товар")
 
     creator = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         verbose_name="Пользователь",
-        related_name='reviews'
+        related_name='users'
     )
 
     text = models.TextField(max_length=100, verbose_name="Отзыв")
@@ -77,7 +77,7 @@ class Order(TimestampFields):
         ('done', 'Завершен')
     )
 
-    status = models.CharField(choices=STATUS, default=1, verbose_name="Статус")
+    status = models.CharField(choices=STATUS, max_length=20, default=1, verbose_name="Статус")
     products = models.ManyToManyField(Product, through=ProductPosition, verbose_name="Товары")
 
     def get_total_cost(self):

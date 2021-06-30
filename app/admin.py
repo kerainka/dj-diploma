@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Review, Order, Collection, ProductPosition
+from .models import Product, ProductReview, Order, Collection, ProductPosition
 
 
 class OrderInline(admin.TabularInline):
@@ -23,7 +23,7 @@ class OrderAdmin(admin.ModelAdmin):
         obj.save()
 
 
-@admin.register(Review)
+@admin.register(ProductReview)
 class ReviewAdmin(admin.ModelAdmin):
     pass
 

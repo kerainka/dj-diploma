@@ -1,7 +1,11 @@
 import pytest
 from rest_framework.test import APIClient
 from model_bakery import baker
-from .conftest import user, user_api
+
+
+@pytest.fixture
+def api_client():
+    return APIClient()
 
 
 @pytest.fixture

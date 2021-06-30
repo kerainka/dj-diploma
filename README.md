@@ -1,1 +1,1 @@
-# dj-diploma
+# Django - Диплом

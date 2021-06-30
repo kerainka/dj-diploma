@@ -8,11 +8,10 @@
 *.pot
 *.pyc
 app/__pycache__/
-django_netology/__pycache__/
+django_api/__pycache__/
 local_settings.py
-django_netology/db.sqlite3
+django_api/db.sqlite3
 db.sqlite3-journal
-db.sqlite3
 media
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
